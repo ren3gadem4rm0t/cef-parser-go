@@ -25,6 +25,10 @@ staticcheck:
 ast:
 	@gosec ./parser/... examples/...
 
+docs:
+	@echo $$(sleep 2 && open http://localhost:6060/pkg/github.com/ren3gadem4rm0t/cef-parser-go/parser/) &
+	@godoc -play -http localhost:6060 -v
+
 clean:
 	@go clean
 	@rm -f ./coverage.out ./coverage.html
