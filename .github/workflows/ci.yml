@@ -55,10 +55,11 @@ jobs:
       - name: Coverage
         run: make coverage
 
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
       - name: Security Scanner
-        uses: securego/gosec@master
-        with:
-          args: ./parser/... examples/...
+        run: make ast
 
       - name: Cleanup
         run: make clean
