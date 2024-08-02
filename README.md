@@ -1,3 +1,5 @@
+[![CI](https://github.com/ren3gadem4rm0t/cef-parser-go/actions/workflows/ci.yml/badge.svg)](https://github.com/ren3gadem4rm0t/cef-parser-go/actions/workflows/ci.yml)
+
 # CEF Parser for Go
 
 ## Overview
