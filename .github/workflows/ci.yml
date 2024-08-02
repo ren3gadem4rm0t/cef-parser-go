@@ -44,8 +44,10 @@ jobs:
       - name: Check formatting
         run: make check-fmt
 
-      - name: Static Check
-        run: make staticcheck
+      - name: Staticcheck
+        uses: dominikh/staticcheck-action@v1
+        with:
+          version: "latest"
 
       - name: Test
         run: make test
