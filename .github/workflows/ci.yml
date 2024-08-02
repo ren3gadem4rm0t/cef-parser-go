@@ -8,6 +8,9 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -34,7 +37,9 @@ jobs:
         run: make vet
 
       - name: Lint
-        run: make lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: v1.59
 
       - name: Check formatting
         run: make check-fmt
@@ -48,8 +53,10 @@ jobs:
       - name: Coverage
         run: make coverage
 
-      - name: Security Scan
-        run: make ast
+      - name: Security Scanner
+        uses: securego/gosec@master
+        with:
+          args: ./...
 
       - name: Cleanup
         run: make clean
