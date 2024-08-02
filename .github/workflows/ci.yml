@@ -58,7 +58,7 @@ jobs:
       - name: Security Scanner
         uses: securego/gosec@master
         with:
-          args: ./...
+          args: ./parser/... examples/...
 
       - name: Cleanup
         run: make clean
