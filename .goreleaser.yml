@@ -1,0 +1,29 @@
+version: 2
+
+project_name: cef-parser-go
+
+builds:
+  - skip: true
+
+archives:
+  - format: tar.gz
+    files:
+      - LICENSE
+      - README.md
+      - go.mod
+      - parser/**/*.go
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+
+release:
+  github:
+    owner: ren3gadem4rm0t
+    name: cef-parser-go
+  draft: false
+  prerelease: false
+
