@@ -11,7 +11,6 @@ import (
 func main() {
 
 	event := parser.ImpervaCEFCombined
-	// event := parser.ImpervaCEF1
 
 	cefEvent, err := parser.ParseCEF(event)
 	if err != nil {
