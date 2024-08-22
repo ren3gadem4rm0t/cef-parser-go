@@ -4,6 +4,7 @@ package parser
 import (
 	"context"
 	"reflect"
+	"sort"
 	"testing"
 	"time"
 )
@@ -894,6 +895,10 @@ func TestDefaultExtensions_GetFieldNames(t *testing.T) {
 	fieldNames := de.GetFieldNames()
 
 	expectedFieldNames := []string{"key1", "key2"}
+
+	// Sort both slices before comparison
+	sort.Strings(fieldNames)
+	sort.Strings(expectedFieldNames)
 
 	if !reflect.DeepEqual(fieldNames, expectedFieldNames) {
 		t.Errorf("expected field names to be '%v', got '%v'", expectedFieldNames, fieldNames)
