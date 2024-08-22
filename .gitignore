@@ -1,5 +1,6 @@
 coverage*
 /.coverage/
+/dist/
 
 # Created by https://www.toptal.com/developers/gitignore/api/certificates,ssh,dotenv,go,compressed,visualstudiocode,macos,windows,linux
 # Edit at https://www.toptal.com/developers/gitignore?templates=certificates,ssh,dotenv,go,compressed,visualstudiocode,macos,windows,linux
