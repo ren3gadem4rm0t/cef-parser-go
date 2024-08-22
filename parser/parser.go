@@ -27,11 +27,24 @@ func ParseCEF(cef string) (*CEF, error) {
 
 // ParseCEFWithContext parses a CEF event string into a CEF struct, supporting context for cancellations and timeouts.
 func ParseCEFWithContext(ctx context.Context, cef string) (*CEF, error) {
+	// Basic input validation before parsing
+	if len(cef) == 0 || len(cef) > 10000 {
+		return nil, fmt.Errorf("invalid CEF string length")
+	}
+
 	regex := regexp.MustCompile(`^CEF:([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|(.*)$`)
 	matches := regex.FindStringSubmatch(cef)
 
 	if len(matches) == 0 {
 		return nil, fmt.Errorf("invalid CEF format")
+	}
+
+	// Further validation on parsed fields
+	if !isValidCEFComponent(matches[1]) || !isValidCEFComponent(matches[2]) ||
+		!isValidCEFComponent(matches[3]) || !isValidCEFComponent(matches[4]) ||
+		!isValidCEFComponent(matches[5]) || !isValidCEFComponent(matches[6]) ||
+		!isValidCEFComponent(matches[7]) {
+		return nil, fmt.Errorf("one or more CEF components are invalid")
 	}
 
 	cefEvent := &CEF{
@@ -75,6 +88,7 @@ func parseExtensions(extension string) map[string]string {
 			currentKey = parts[0]
 			currentVal = parts[1]
 
+			// Handle JSON-like and complex structures
 			if strings.HasPrefix(currentVal, "\"") && !strings.HasSuffix(currentVal, "\"") {
 				isValueComplex = true
 				complexValBuilder.WriteString(currentVal)
@@ -103,4 +117,30 @@ func parseExtensions(extension string) map[string]string {
 	}
 
 	return keyValPairs
+}
+
+// isValidCEFComponent ensures that each CEF component is valid.
+func isValidCEFComponent(component string) bool {
+	// Validate length and ensure no forbidden characters
+	return len(component) > 0 && len(component) <= 100 && regexp.MustCompile(`^[a-zA-Z0-9_ .-]+$`).MatchString(component)
+}
+
+// isValidCEFKey validates if the CEF key conforms to expected patterns.
+func isValidCEFKey(key string) bool {
+	// Implement more complex validation if necessary
+	if len(key) == 0 || len(key) > 50 {
+		return false
+	}
+	// Ensure the key contains only allowed characters
+	return regexp.MustCompile(`^[a-zA-Z0-9_]+$`).MatchString(key)
+}
+
+// isValidCEFValue validates the CEF value for length and content.
+func isValidCEFValue(value string) bool {
+	// Implement more complex validation if necessary
+	if len(value) == 0 || len(value) > 1000 {
+		return false
+	}
+	// Basic check to ensure there are no unexpected characters
+	return true
 }

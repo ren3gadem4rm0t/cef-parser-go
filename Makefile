@@ -33,4 +33,12 @@ clean:
 	@go clean
 	@rm -f ./coverage.out ./coverage.html
 
+fuzz:
+	@echo "Running fuzz tests..."
+	@fuzz_tests=("FuzzParseCEF" "FuzzParseExtensions" "FuzzAsJSON" "FuzzSecurityCEF" "FuzzStructuredCEF"); \
+	for fuzz_test in $${fuzz_tests[@]}; do \
+		echo "Running fuzz test: $$fuzz_test"; \
+		go test ./parser -fuzz=$$fuzz_test -fuzztime=30s; \
+	done
+
 all: test lint fmt vet staticcheck ast
