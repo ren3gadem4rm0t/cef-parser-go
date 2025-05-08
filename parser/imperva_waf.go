@@ -102,16 +102,23 @@ func (ie *ImpervaExtensions) ParseExtensions(extension string) map[string]string
 	ie.SIP = fields["sip"]
 	ie.SPT = fields["spt"]
 	ie.In = fields["in"]
-	ie.XFF = strings.Split(fields["xff"], ", ")
-	ie.CS10 = fields["cs10"]
+
+	// Initialize default value for CS11 as empty string
+	ie.CS11 = ""
+
+	// Handle XFF with proper format
+	if xff, ok := fields["xff"]; ok {
+		ie.XFF = strings.Split(strings.TrimSpace(xff), " ")
+	}
+
 	ie.CS10Label = fields["cs10Label"]
-	ie.CS11 = fields["cs11"]
 	ie.CS11Label = fields["cs11Label"]
 	ie.CPT = fields["cpt"]
 	ie.Src = fields["src"]
 	ie.Ver = fields["ver"]
 	ie.End = fields["end"]
 
+	// Process JSON fields with proper error handling
 	if additionalResHeaders, ok := fields["additionalResHeaders"]; ok {
 		additionalResHeaders = removeCEFEscapeChars(additionalResHeaders)
 		var additionalResHeadersJSON interface{}
@@ -132,7 +139,7 @@ func (ie *ImpervaExtensions) ParseExtensions(extension string) map[string]string
 		}
 	}
 
-	if cs10, ok := fields["cs10"]; ok {
+	if cs10, ok := fields["cs10"]; ok && strings.HasPrefix(cs10, "[") {
 		cs10 = removeCEFEscapeChars(cs10)
 		var cs10JSON interface{}
 		if err := json.Unmarshal([]byte(cs10), &cs10JSON); err == nil {
@@ -140,9 +147,11 @@ func (ie *ImpervaExtensions) ParseExtensions(extension string) map[string]string
 		} else {
 			ie.CS10 = cs10
 		}
+	} else if cs10, ok := fields["cs10"]; ok {
+		ie.CS10 = cs10
 	}
 
-	if cs11, ok := fields["cs11"]; ok {
+	if cs11, ok := fields["cs11"]; ok && strings.HasPrefix(cs11, "[") {
 		cs11 = removeCEFEscapeChars(cs11)
 		var cs11JSON interface{}
 		if err := json.Unmarshal([]byte(cs11), &cs11JSON); err == nil {
@@ -150,6 +159,8 @@ func (ie *ImpervaExtensions) ParseExtensions(extension string) map[string]string
 		} else {
 			ie.CS11 = cs11
 		}
+	} else if cs11, ok := fields["cs11"]; ok {
+		ie.CS11 = cs11
 	}
 
 	return fields

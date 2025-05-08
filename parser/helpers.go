@@ -40,6 +40,6 @@ func structToMap(obj interface{}) map[string]string {
 // Particularly useful for JSON strings with unnecessary escapes.
 func removeCEFEscapeChars(s string) string {
 	// remove escape for `=`
-	s = strings.Replace(s, `\=`, "=", -1)
+	s = strings.ReplaceAll(s, `\=`, "=")
 	return s
 }

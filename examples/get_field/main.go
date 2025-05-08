@@ -27,4 +27,7 @@ func main() {
 	}
 
 	fmt.Printf("CS10: %+v\n", cs10)
+
+	// Return the CEF object to the pool when done
+	parser.Release(cefEvent)
 }

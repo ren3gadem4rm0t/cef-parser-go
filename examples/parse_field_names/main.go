@@ -28,5 +28,8 @@ func main() {
 		fmt.Printf("Vendor: %s\nProduct: %s\n", cefEvent.DeviceVendor, cefEvent.DeviceProduct)
 		fmt.Printf("Extensions: %s\n", strings.Join(cefEvent.Extensions.GetFieldNames(), ", "))
 		fmt.Println("-----")
+
+		// Return the CEF object to the pool when done
+		parser.Release(cefEvent)
 	}
 }

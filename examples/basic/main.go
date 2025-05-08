@@ -10,7 +10,7 @@ import (
 
 func main() {
 
-	event := parser.ImpervaCEFCombined
+	event := parser.ImpervaCEF5
 
 	cefEvent, err := parser.ParseCEF(event)
 	if err != nil {
@@ -18,4 +18,7 @@ func main() {
 	}
 
 	fmt.Println(cefEvent.AsJSON())
+
+	// Return the CEF object to the pool when done
+	parser.Release(cefEvent)
 }
