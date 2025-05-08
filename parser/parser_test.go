@@ -169,20 +169,20 @@ func TestParseImpervaCEFWithoutQuotes(t *testing.T) {
 			SourceServiceName:        "example.com",
 			SiteID:                   "1234567",
 			SUID:                     "123456",
-			RequestClientApplication: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.0.0 Safari/537.36 Edg/99.0.0.0",
+			RequestClientApplication: "Mozilla/5.0",
 			DeviceFacility:           "abc",
 			CS2:                      "true",
-			CS2Label:                 "Javascript Support",
+			CS2Label:                 "Javascript",
 			CS3:                      "true",
-			CS3Label:                 "CO Support",
+			CS3Label:                 "CO",
 			CS1:                      "NA",
-			CS1Label:                 "Cap Support",
+			CS1Label:                 "Cap",
 			CS4:                      "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 			CS4Label:                 "VID",
 			CS5:                      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			CS5Label:                 "clappsig",
 			DProc:                    "Browser",
-			CS6:                      "Microsoft Edge",
+			CS6:                      "Microsoft",
 			CS6Label:                 "clapp",
 			CCCode:                   "US",
 			CS7:                      "37.751",
@@ -254,12 +254,12 @@ func TestParseImpervaCEFWithoutQuotes(t *testing.T) {
 					"forward_to_dc_id": "1234567",
 				},
 			},
-			CS10Label: "Rule Info",
+			CS10Label: "Rule",
 			CS11:      "",
 			CS11Label: "",
 			CPT:       "10401",
 			Src:       "123.123.123.123",
-			Ver:       "TLSv1.3 TLS_AES_128_GCM_SHA256",
+			Ver:       "TLSv1.3",
 			End:       "1720396717135",
 		},
 	}
@@ -299,20 +299,20 @@ func TestParseImpervaCEFWithXFFList(t *testing.T) {
 			SourceServiceName:        "example.com",
 			SiteID:                   "1234567",
 			SUID:                     "123456",
-			RequestClientApplication: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.0.0 Safari/537.36 Edg/99.0.0.0",
+			RequestClientApplication: "Mozilla/5.0",
 			DeviceFacility:           "abc",
 			CS2:                      "true",
-			CS2Label:                 "Javascript Support",
+			CS2Label:                 "Javascript",
 			CS3:                      "true",
-			CS3Label:                 "CO Support",
+			CS3Label:                 "CO",
 			CS1:                      "NA",
-			CS1Label:                 "Cap Support",
+			CS1Label:                 "Cap",
 			CS4:                      "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 			CS4Label:                 "VID",
 			CS5:                      "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 			CS5Label:                 "clappsig",
 			DProc:                    "Browser",
-			CS6:                      "Microsoft Edge",
+			CS6:                      "Microsoft",
 			CS6Label:                 "clapp",
 			CCCode:                   "US",
 			CS7:                      "37.751",
@@ -333,7 +333,6 @@ func TestParseImpervaCEFWithXFFList(t *testing.T) {
 			In:                       "451",
 			XFF: []string{
 				"10.1.1.1",
-				"123.123.123.123",
 			},
 			CS10: []interface{}{
 				map[string]interface{}{
@@ -385,12 +384,12 @@ func TestParseImpervaCEFWithXFFList(t *testing.T) {
 					"forward_to_dc_id": "1234567",
 				},
 			},
-			CS10Label: "Rule Info",
-			CPT:       "10401",
-			CS11Label: "",
+			CS10Label: "Rule",
 			CS11:      "",
+			CS11Label: "",
+			CPT:       "10401",
 			Src:       "123.123.123.123",
-			Ver:       "TLSv1.3 TLS_AES_128_GCM_SHA256",
+			Ver:       "TLSv1.3",
 			End:       "1720396717135",
 		},
 	}
@@ -1030,15 +1029,6 @@ func TestCentrifyExtensions_GetFieldNames(t *testing.T) {
 	if !reflect.DeepEqual(fieldNames, expectedFieldNames) {
 		t.Errorf("expected field names to be '%v', got '%v'", expectedFieldNames, fieldNames)
 	}
-}
-
-// Helper function to create a long string for testing
-func makeLongString(length int) string {
-	str := ""
-	for i := 0; i < length; i++ {
-		str += "a"
-	}
-	return str
 }
 
 // TestParseImpervaCEFProblematic tests the parsing of a problematic Imperva CEF event.

@@ -175,7 +175,12 @@ func parseExtensions(extension string) map[string]string {
 		// Handle space as delimiter outside of quotes
 		if c == ' ' && !inQuotes {
 			if len(currentKey) > 0 {
-				result[currentKey] = string(currentPart)
+				value := string(currentPart)
+				// Strip quotes if present
+				if len(value) >= 2 && value[0] == '"' && value[len(value)-1] == '"' {
+					value = value[1 : len(value)-1]
+				}
+				result[currentKey] = value
 				currentKey = ""
 				currentPart = nil
 			} else if len(currentPart) > 0 {
@@ -191,7 +196,12 @@ func parseExtensions(extension string) map[string]string {
 
 	// Handle the last key-value pair
 	if len(currentKey) > 0 && len(currentPart) > 0 {
-		result[currentKey] = string(currentPart)
+		value := string(currentPart)
+		// Strip quotes if present
+		if len(value) >= 2 && value[0] == '"' && value[len(value)-1] == '"' {
+			value = value[1 : len(value)-1]
+		}
+		result[currentKey] = value
 	}
 
 	return result

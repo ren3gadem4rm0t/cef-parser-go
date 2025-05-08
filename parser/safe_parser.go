@@ -277,7 +277,7 @@ func (p *SafeParser) GetMetrics() map[string]uint64 {
 func (p *SafeParser) incrementMetric(name string) {
 	p.metricsMutex.Lock()
 	defer p.metricsMutex.Unlock()
-	val, _ := p.metrics[name]
+	val := p.metrics[name]
 	p.metrics[name] = val + 1
 }
 
@@ -285,7 +285,7 @@ func (p *SafeParser) incrementMetric(name string) {
 func (p *SafeParser) addMetric(name string, value uint64) {
 	p.metricsMutex.Lock()
 	defer p.metricsMutex.Unlock()
-	val, _ := p.metrics[name]
+	val := p.metrics[name]
 	p.metrics[name] = val + value
 }
 

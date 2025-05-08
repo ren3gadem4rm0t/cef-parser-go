@@ -232,7 +232,7 @@ func (p *StandardParser) GetMetrics() map[string]uint64 {
 func (p *StandardParser) incrementMetric(name string) {
 	p.metricsMutex.Lock()
 	defer p.metricsMutex.Unlock()
-	val, _ := p.metrics[name]
+	val := p.metrics[name]
 	p.metrics[name] = val + 1
 }
 
@@ -240,7 +240,7 @@ func (p *StandardParser) incrementMetric(name string) {
 func (p *StandardParser) addMetric(name string, value uint64) {
 	p.metricsMutex.Lock()
 	defer p.metricsMutex.Unlock()
-	val, _ := p.metrics[name]
+	val := p.metrics[name]
 	p.metrics[name] = val + value
 }
 
