@@ -13,6 +13,8 @@ func FuzzParseCEF(f *testing.F) {
 	f.Add(ImpervaCEF1)
 	f.Add(CentrifyCEF)
 	f.Add(ImpervaCEFCombined)
+	f.Add(ImpervaCEF5)
+	f.Add(ImpervaCEF6)
 
 	f.Fuzz(func(t *testing.T, data string) {
 		_, err := ParseCEFWithContext(context.Background(), data)
@@ -74,6 +76,8 @@ func FuzzSecurityCEF(f *testing.F) {
 	f.Add(`CEF:0|Vendor|Product|1.0|1000|TestEvent|5|fileid=maliciousValue\nSecondEvent|malicious|attack`)
 	// JSON Injection attempt
 	f.Add(`CEF:0|Vendor|Product|1.0|1000|TestEvent|5|fileid={"key":"value"}`)
+	// Rate limiting specific test (similar to ImpervaCEF5/6)
+	f.Add(`CEF:0|Incapsula|SIEMintegration|1|1|IncapRules(Known Offenders Rate Limit)|11| fileId=1234567890123456789 cs5=abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef cs10=[{"type":"RATE_LIMIT","limit":"10000","period":"300","current":"15000"}]`)
 	// Large JSON object to test for JSON parsing limits and possible memory exhaustion
 	f.Add(`CEF:0|Vendor|Product|1.0|1000|TestEvent|5|fileid={"key":` + strings.Repeat(`"value",`, 10000) + `"last":"value"}`)
 	// Nested JSON structure to test recursion limits
